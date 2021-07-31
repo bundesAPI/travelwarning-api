@@ -1,0 +1,347 @@
+swagger: '2.0'
+info:
+  description: >-
+    Dies ist die Beschreibung für die Schnittstelle zum Zugriff auf die Daten
+    des Auswärtigen Amtes im Rahmen der OpenData Initiative.
+
+
+    Deaktivierung
+
+    Die Schnittstelle kann deaktiviert werden, in dem Fall wird ein leeres JSON
+    zurückgegeben.
+
+
+    Fehlerfall:
+     Im Fehlerfall wird ein leeres JSON Objekt zurückgegeben.
+  version: 1.0.0
+  title: Auswärtiges Amt OpenData Schnittstelle
+host: www.auswaertiges-amt.de
+basePath: /opendata
+schemes:
+  - https
+paths:
+  /travelwarning:
+    get:
+      summary: Gibt alle Reise- und Sicherheitshinweise zurück
+      description: ''
+      operationId: getTravelwarning
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Erfolgreich
+          schema:
+            $ref: '#/definitions/ResponseWarnings'
+  '/travelwarning/{contentId}':
+    get:
+      summary: Gibt einen Reise- und Sicherheitshinweis zurück
+      description: ''
+      operationId: getSingleTravelwarning
+      parameters:
+        - name: contentId
+          in: path
+          description: 'Die ID des Reise- und Sicherheitshinweises, IDs siehe /travelwarning'
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Erfolgreich
+          schema:
+            $ref: '#/definitions/ResponseWarning'
+  /representativesInGermany:
+    get:
+      summary: Gibt eine Liste der ausländischen Vertretungen in Deutschland zurück
+      description: ''
+      operationId: getRepresentativesGermany
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Erfolgreich
+          schema:
+            $ref: '#/definitions/ResponseAddress'
+  /representativesInCountry:
+    get:
+      summary: Gibt eine Liste der deutschen Vertretungen im Ausland zurück
+      description: ''
+      operationId: getRepresentativesCountry
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Erfolgreich
+          schema:
+            $ref: '#/definitions/ResponseAddress'
+  /stateNames:
+    get:
+      summary: Gibt das Verzeichnis der Staatennamen zurück
+      description: Verzeichnis der Staatennamen als Link auf eine PDF/XML/CSV Datei
+      operationId: getStateNames
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Erfolgreich
+          schema:
+            $ref: '#/definitions/ResponseDownload'
+  /healthcare:
+    get:
+      summary: Gibt die Merkblätter des Gesundheitsdienstes zurück
+      description: Merkblätter des Gesundheitsdienstes als Link auf ein PDF
+      operationId: getHealthcare
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Erfolgreich
+          schema:
+            $ref: '#/definitions/ResponseDownload'
+definitions:
+  Empty:
+    title: Fehler/Leer
+    type: object
+    description: >-
+      Wird zurückgegeben im Fehlerfall oder wenn die Schnittstelle deaktiviert
+      wurde
+  ResponseAddress:
+    type: object
+    title: Antwort mit Adressenliste
+    properties:
+      response:
+        type: object
+        properties:
+          '12345':
+            $ref: '#/definitions/AdressListe'
+          contentList:
+            type: array
+            description: IDs der Objekte
+            items:
+              type: string
+              example: '12345'
+  ResponseWarnings:
+    type: object
+    title: Antwort mit Reise- und Sicherheitshinweisen
+    properties:
+      response:
+        type: object
+        properties:
+          '12345':
+            $ref: '#/definitions/Reisewarnung'
+          '23456':
+            $ref: '#/definitions/Reisewarnung'
+          contentList:
+            type: array
+            description: IDs der Objekte
+            items:
+              type: string
+            example:
+              - '12345'
+              - '23456'
+  ResponseWarning:
+    type: object
+    title: Antwort mit Reise- und Sicherheitshinweis
+    properties:
+      response:
+        type: object
+        properties:
+          '12345':
+            $ref: '#/definitions/Reisewarnung'
+          contentList:
+            type: array
+            description: IDs der Objekte
+            items:
+              type: string
+              example: '12345'
+  ResponseArtikel:
+    type: object
+    title: Antwort mit Artikeln
+    properties:
+      response:
+        type: object
+        properties:
+          '12345':
+            $ref: '#/definitions/Artikel'
+          contentList:
+            type: array
+            description: IDs der Objekte
+            items:
+              type: string
+              example: '12345'
+  ResponseDownload:
+    type: object
+    title: Antwort mit Downloads
+    properties:
+      response:
+        type: object
+        properties:
+          '12345':
+            $ref: '#/definitions/Download'
+          contentList:
+            type: array
+            description: IDs der Objekte
+            items:
+              type: string
+              example: '12345'
+  Reisewarnung:
+    type: object
+    properties:
+      lastModified:
+        type: number
+        description: Zeitstempel der letzten Änderung
+        example: 1499681492000
+      effective:
+        type: number
+        description: 'Zeitstempel, seit wann der Reisehinweis gilt'
+        example: 1499681492000
+      flagUrl:
+        type: string
+        description: URL der Länderflagge
+        example: 'https://www.auswaertiges-amt.de/blob/1234.jpg'
+      title:
+        type: string
+        description: Titel des Landes
+        example: Deutschland
+      warning:
+        type: boolean
+        description: Ob eine Reisewarnung ausgesprochen wurde
+        example: true
+      partialWarning:
+        type: boolean
+        description: Ob eine Teilreisewarnung ausgesprochen wurde
+        example: false
+      content:
+        type: string
+        description: Text der Länderseite
+        example: <h3>Titel</h3><div>Inhalt</div>
+  AdressListe:
+    type: object
+    properties:
+      '67890':
+        $ref: '#/definitions/Adresse'
+      lastModified:
+        type: number
+        description: Zeitstempel der letzten Änderung
+        example: 1499681492000
+      contentList:
+        type: array
+        description: IDs der enthaltenen Adressen
+        items:
+          type: string
+          example: '67890'
+  Artikel:
+    type: object
+    properties:
+      lastModified:
+        type: number
+        description: Zeitstempel der letzten Änderung
+        example: 1499681492000
+      title:
+        type: string
+        description: Titel
+        example: Zika-Virus-Infektion
+      content:
+        type: string
+        description: Inhalt
+        example: <div>Inhalt</div>
+  Download:
+    type: object
+    properties:
+      lastModified:
+        type: number
+        description: Zeitstempel der letzten Änderung
+        example: 1499681492000
+      name:
+        type: string
+        description: Name
+        example: Merkblatt zum Thema
+      url:
+        type: string
+        description: Link zum Download
+        example: 'https://www.auswaertiges-amt.de/blob/1234.pdf'
+  Adresse:
+    type: object
+    properties:
+      lastModified:
+        type: number
+        description: Zeitstempel der letzten Änderung
+        example: 1499681492000
+      title:
+        type: string
+        description: Titel
+        example: Botschaft der Musterstaaten
+      leader:
+        type: string
+        description: Leiter
+        example: Herr/Frau Mustermann/-frau
+      locales:
+        type: string
+        description: Sprachen
+        example: 'Deutsch, Englisch'
+      country:
+        type: string
+        description: Land
+        example: Deutschland
+      zip:
+        type: string
+        description: Postleitzahl
+        example: '12345'
+      city:
+        type: string
+        description: Stadt
+        example: Musterstadt
+      region:
+        type: string
+        description: Region
+        example: Musterregion
+      street:
+        type: string
+        description: Straße
+        example: Hauptstraße
+      number:
+        type: string
+        description: Hausnummer
+        example: '12'
+      departments:
+        type: string
+        description: Abteilungen
+        example: Handelsabteilung Tel. +49
+      fax:
+        type: string
+        description: Faxnummer
+        example: +49 123 456789
+      telefone:
+        type: string
+        description: Telefonnummer
+        example: +49 123 456789
+      mail:
+        type: string
+        description: E-Mail
+        example: extern@diplo.de
+      misc:
+        type: string
+        description: Sonstiges
+        example: Sonstige Anmerkungen
+      url:
+        type: string
+        description: Externer Link
+        example: 'https://extern.diplo.de'
+      postal:
+        type: string
+        description: Postfach
+        example: 'Hauptstraße 12, 12345 Musterstadt'
+      type:
+        type: string
+        description: Adresstyp
+        example: Botschaft
+      remark:
+        type: string
+        description: Hinweis
+        example: Sonntag geschlossen
+      open:
+        type: string
+        description: Öffnungszeiten
+        example: '10:00-18:00'
