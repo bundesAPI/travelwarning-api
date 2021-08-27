@@ -29,7 +29,7 @@ paths:
         '200':
           description: Erfolgreich
           content:
-            application/json:
+            text/json;charset=UTF-8:
               schema:
                 $ref: '#/components/schemas/ResponseWarnings'
   '/travelwarning/{contentId}':
@@ -48,9 +48,11 @@ paths:
         '200':
           description: Erfolgreich
           content:
-            application/json:
+            text/json;charset=UTF-8:
               schema:
                 $ref: '#/components/schemas/ResponseWarning'
+        '404':
+          description: Not Found
   /representativesInGermany:
     get:
       summary: Gibt eine Liste der ausländischen Vertretungen in Deutschland zurück
@@ -60,7 +62,7 @@ paths:
         '200':
           description: Erfolgreich
           content:
-            application/json:
+            text/json;charset=UTF-8:
               schema:
                 $ref: '#/components/schemas/ResponseAddress'
   /representativesInCountry:
@@ -72,7 +74,7 @@ paths:
         '200':
           description: Erfolgreich
           content:
-            application/json:
+            text/json;charset=UTF-8:
               schema:
                 $ref: '#/components/schemas/ResponseAddress'
   /stateNames:
