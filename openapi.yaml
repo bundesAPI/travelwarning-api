@@ -2,19 +2,32 @@ openapi: "3.0.0"
 info:
   description: >-
     Dies ist die Beschreibung für die Schnittstelle zum Zugriff auf die Daten
-    des Auswärtigen Amtes im Rahmen der OpenData Initiative.
+    des [Auswärtigen Amtes](https://www.auswaertiges-amt.de/de/) im Rahmen der
+    [OpenData](https://www.auswaertiges-amt.de/de/open-data-schnittstelle/736118) Initiative.
 
+    ## Deaktivierung
 
-    Deaktivierung
+    Die Schnittstelle kann deaktiviert werden, in dem Fall wird ein leeres JSON-Objekt zurückgegeben.
 
-    Die Schnittstelle kann deaktiviert werden, in dem Fall wird ein leeres JSON
-    zurückgegeben.
+    ## Fehlerfall
+    
+    Im Fehlerfall wird ein leeres JSON-Objekt zurückgegeben.
 
+    ## Nutzungsbedingungen
 
-    Fehlerfall:
-     Im Fehlerfall wird ein leeres JSON Objekt zurückgegeben.
-  version: 1.0.0
+    Die Nutzungsbedingungen sind auf der [OpenData-Schnittstelle](https://www.auswaertiges-amt.de/de/open-data-schnittstelle/736118)
+     des Auswärtigen Amtes zu finden. 
+
+    ## Änderungen
+
+    ### version 1.0.1 (September 2021)
+
+    * `content` (-> Details des Reise- und Sicherheitshinweis) wurde von [`/travelwarning`](#operations-default-getTravelwarning)
+     entfernt -> bitte ab jetzt [`/travelwarning/{contentId}`](#operations-default-getSingleTravelwarning) nutzen um `content` abzufragen
+
+  version: 1.0.1
   title: Auswärtiges Amt OpenData Schnittstelle
+  termsOfService: 'https://www.auswaertiges-amt.de/de/open-data-schnittstelle/736118'
 
 servers:
   - url: 'https://www.auswaertiges-amt.de/opendata'
@@ -35,10 +48,11 @@ paths:
   '/travelwarning/{contentId}':
     get:
       summary: Gibt einen Reise- und Sicherheitshinweis zurück
-      description: 'Die ID des Reise- und Sicherheitshinweises, IDs siehe /travelwarning'
+      description: 'Gibt den vollständigen Datensatz eines Reise- und Sicherheitshinweises zurück. Benötigt die jeweilige ID siehe /travelwarning'
       operationId: getSingleTravelwarning
       parameters:
         - name: contentId
+          description: 'Die ID des Reise- und Sicherheitshinweises, IDs siehe /travelwarning'
           in: path
           required: true
           schema:
@@ -80,7 +94,7 @@ paths:
   /stateNames:
     get:
       summary: Gibt das Verzeichnis der Staatennamen zurück
-      description: Verzeichnis der Staatennamen als Link auf eine PDF/XML/CSV Datei
+      description: Verzeichnis der Staatennamen als Link auf eine XML- oder CSV-Datei. Eine PDF-Datei mit Nutzungshinweisen wird ebenfalls zurückgegeben.
       operationId: getStateNames
       responses:
         '200':
@@ -132,9 +146,9 @@ components:
           type: object
           properties:
             '12345':
-              $ref: '#/components/schemas/Reisewarnung'
+              $ref: '#/components/schemas/ReisewarnungZusammenfassung'
             '23456':
-              $ref: '#/components/schemas/Reisewarnung'
+              $ref: '#/components/schemas/ReisewarnungZusammenfassung'
             contentList:
               type: array
               description: IDs der Objekte
@@ -219,6 +233,33 @@ components:
           type: string
           description: Text der Länderseite
           example: <h3>Titel</h3><div>Inhalt</div>
+    ReisewarnungZusammenfassung:
+      type: object
+      properties:
+        lastModified:
+          type: number
+          description: Zeitstempel der letzten Änderung
+          example: 1499681492000
+        effective:
+          type: number
+          description: 'Zeitstempel, seit wann der Reisehinweis gilt'
+          example: 1499681492000
+        flagUrl:
+          type: string
+          description: URL der Länderflagge
+          example: 'https://www.auswaertiges-amt.de/blob/1234.jpg'
+        title:
+          type: string
+          description: Titel des Landes
+          example: Deutschland
+        warning:
+          type: boolean
+          description: Ob eine Reisewarnung ausgesprochen wurde
+          example: true
+        partialWarning:
+          type: boolean
+          description: Ob eine Teilreisewarnung ausgesprochen wurde
+          example: false
     AdressListe:
       type: object
       properties:
