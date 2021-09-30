@@ -1,4 +1,4 @@
-[![.github/workflows/openapi_check.yaml](https://github.com/bundesAPI/travelwarning-api/actions/workflows/openapi_check.yaml/badge.svg)](https://github.com/bundesAPI/travelwarning-api/travelwarning-api/actions/workflows/openapi_check.yaml)
+[![.github/workflows/openapi_check.yaml](https://github.com/bundesAPI/travelwarning-api/actions/workflows/openapi_check.yaml/badge.svg)](https://github.com/bundesAPI/travelwarning-api/actions/workflows/openapi_check.yaml)
 
 # Auswärtiges Amt OpenData Schnittstelle
 
