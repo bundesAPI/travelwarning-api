@@ -1,3 +1,5 @@
+[![.github/workflows/openapi_check.yaml](https://github.com/bundesAPI/travelwarning-api/actions/workflows/openapi_check.yaml/badge.svg)](https://github.com/bundesAPI/travelwarning-api/travelwarning-api/actions/workflows/openapi_check.yaml)
+
 # Auswärtiges Amt OpenData Schnittstelle
 
 Enthält die [Beschreibung](https://travelwarning.api.bund.dev/index.html) für die Schnittstelle zum Zugriff auf die Daten
