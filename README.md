@@ -19,9 +19,13 @@ Im Fehlerfall wird ein leeres JSON-Objekt zurückgegeben.
 Die Nutzungsbedingungen sind auf der [OpenData-Schnittstelle](https://www.auswaertiges-amt.de/de/open-data-schnittstelle/736118)
 des Auswärtigen Amtes zu finden. 
 
-## Änderungen
+## [Änderungen](https://www.auswaertiges-amt.de/de/-/2412916)
 
-### version 1.0.1 (September 2021)
+### version [1.2.5](https://www.auswaertiges-amt.de/de/-/2412916) (September 2021)
+
+*Einführung verzögert sich*
 
 * `content` (-> Details des Reise- und Sicherheitshinweis) wurde von [`/travelwarning`](#operations-default-getTravelwarning)
 entfernt -> bitte ab jetzt [`/travelwarning/{contentId}`](#operations-default-getSingleTravelwarning) nutzen um `content` abzufragen
+* `flagURL` (-> Details des Reise- und Sicherheitshinweis) ist noch (Ende November 2021) präsent soll aber zukünftig entfernt werden -> es werden keine **Flaggen** mehr angeboten
+
