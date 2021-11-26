@@ -21,7 +21,7 @@ des Auswärtigen Amtes zu finden.
 
 ## [Änderungen](https://www.auswaertiges-amt.de/de/-/2412916)
 
-### version [1.2.5](https://www.auswaertiges-amt.de/de/-/2412916) (September 2021)
+### version [1.2.5](https://www.auswaertiges-amt.de/de/-/2412916) (ursprünglich geplant für Ende September 2021)
 
 *Einführung verzögert sich*
 
