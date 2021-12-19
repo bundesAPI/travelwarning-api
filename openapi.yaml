@@ -1,6 +1,7 @@
 openapi: "3.0.0"
 info:
   description: >-
+    Reisewarnungen OpenData Schnittstelle.
     Dies ist die Beschreibung für die Schnittstelle zum Zugriff auf die Daten
     des [Auswärtigen Amtes](https://www.auswaertiges-amt.de/de/) im Rahmen der
     [OpenData](https://www.auswaertiges-amt.de/de/open-data-schnittstelle/736118) Initiative.
@@ -31,7 +32,7 @@ info:
     `flagURL` (-> Details des Reise- und Sicherheitshinweis) ist noch (Ende November 2021) präsent soll aber zukünftig entfernt werden -> es werden keine **Flaggen** mehr angeboten
 
   version: 1.0.1
-  title: Auswärtiges Amt OpenData Schnittstelle
+  title: Auswärtiges Amt: Reisewarnungen OpenData Schnittstelle
   termsOfService: 'https://www.auswaertiges-amt.de/de/open-data-schnittstelle/736118'
 
 servers:
