@@ -31,8 +31,9 @@ info:
 
     `flagURL` (-> Details des Reise- und Sicherheitshinweis) ist noch (Ende November 2021) präsent soll aber zukünftig entfernt werden -> es werden keine **Flaggen** mehr angeboten
 
-  version: 1.0.1
-  title: Auswärtiges Amt: Reisewarnungen OpenData Schnittstelle
+  version: 1.2.6
+  title: >-
+    Auswärtiges Amt: Reisewarnungen OpenData Schnittstelle
   termsOfService: 'https://www.auswaertiges-amt.de/de/open-data-schnittstelle/736118'
 
 servers:
@@ -219,13 +220,18 @@ components:
           type: number
           description: 'Zeitstempel, seit wann der Reisehinweis gilt'
           example: 1499681492000
-        flagUrl:
-          type: string
-          description: 'URL der Länderflagge -> Achtung: Dieses Attribut soll zukünftig entfernt werden!'
-          example: 'https://www.auswaertiges-amt.de/blob/1234.jpg'
         title:
           type: string
           description: Titel des Landes
+          example: >-
+            Deutschland: Reise- und Sicherheitshinweise
+        CountryCode:
+          type: string
+          description: Zweistelliger Ländercode
+          example: DE
+        CountryName:
+          type: string
+          description: (Deutscher) Name des Landes
           example: Deutschland
         warning:
           type: boolean
@@ -234,6 +240,16 @@ components:
         partialWarning:
           type: boolean
           description: Ob eine Teilreisewarnung ausgesprochen wurde
+          example: false
+        situationWarning:
+          type: boolean
+          description: >-
+           Steht aktuell (Januar 2022) für *„COVID-19-bedingte Reisewarnung“* kann sich in Zukunft möglicherweise ändern.
+          example: false
+        situationPartWarning:
+          type: boolean
+          description: >-
+           Steht aktuell (Januar 2022) für *„COVID-19-bedingte Teilreisewarnung“* kann sich in Zukunft möglicherweise ändern.
           example: false
         content:
           type: string
@@ -250,13 +266,18 @@ components:
           type: number
           description: 'Zeitstempel, seit wann der Reisehinweis gilt'
           example: 1499681492000
-        flagUrl:
-          type: string
-          description: URL der Länderflagge
-          example: 'https://www.auswaertiges-amt.de/blob/1234.jpg'
         title:
           type: string
           description: Titel des Landes
+          example: >-
+            Deutschland: Reise- und Sicherheitshinweise
+        CountryCode:
+          type: string
+          description: Zweistelliger Ländercode
+          example: DE
+        CountryName:
+          type: string
+          description: (Deutscher) Name des Landes
           example: Deutschland
         warning:
           type: boolean
@@ -265,6 +286,16 @@ components:
         partialWarning:
           type: boolean
           description: Ob eine Teilreisewarnung ausgesprochen wurde
+          example: false
+        situationWarning:
+          type: boolean
+          description: >-
+           Steht aktuell (Januar 2022) für *„COVID-19-bedingte Reisewarnung“* kann sich in Zukunft möglicherweise ändern.
+          example: false
+        situationPartWarning:
+          type: boolean
+          description: >-
+           Steht aktuell (Januar 2022) für *„COVID-19-bedingte Teilreisewarnung“* kann sich in Zukunft möglicherweise ändern.
           example: false
     AdressListe:
       type: object
