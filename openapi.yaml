@@ -21,15 +21,19 @@ info:
 
     ## Änderungen [(offizielles Changelog)](https://www.auswaertiges-amt.de/de/-/2412916)
 
+    ### version [1.2.6](https://www.auswaertiges-amt.de/de/-/2412916) - (08.12.2021)
+
+    Es werden zusätzlich zu jedem Land **Ländercodes** mit jeweils **zwei Buchstaben** mit ausgegeben.
+
+
+    Die Länderkürzel werden bei [`/travelwarning`](#operations-default-getTravelwarning) und [`/travelwarning/{contentId}`](#operations-default-getSingleTravelwarning) in einem neuen Attribut ausgegeben z.B. in: [`/travelwarning/199124`](https://www.auswaertiges-amt.de/opendata/travelwarning/199124).
+
     ### version [1.2.5](https://www.auswaertiges-amt.de/de/-/2412916) (ursprünglich geplant für Ende September 2021)
 
-    *Einführung verzögert sich*
-
-
     `content` (-> Details des Reise- und Sicherheitshinweis) wurde von [`/travelwarning`](#operations-default-getTravelwarning) entfernt -> bitte ab jetzt [`/travelwarning/{contentId}`](#operations-default-getSingleTravelwarning) nutzen um `content` abzufragen
-    
 
-    `flagURL` (-> Details des Reise- und Sicherheitshinweis) ist noch (Ende November 2021) präsent soll aber zukünftig entfernt werden -> es werden keine **Flaggen** mehr angeboten
+
+    `flagURL` (-> Details des Reise- und Sicherheitshinweis) wurde entfernt -> es werden keine **Flaggen** mehr angeboten
 
   version: 1.2.6
   title: >-
