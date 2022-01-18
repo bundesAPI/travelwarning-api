@@ -1,0 +1,8 @@
+version: 2
+updates:
+
+  # Maintain dependencies for Python
+  - package-ecosystem: "pip"
+    directory: "/python-client"
+    schedule:
+      interval: "daily"
