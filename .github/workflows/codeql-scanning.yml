@@ -9,6 +9,9 @@ on:
   schedule:
     - cron: '30 18 * * 3'
 
+  # added to manually test workflow from 'actions' tab
+  workflow_dispatch:
+
 jobs:
   analyze:
     name: Analyze
