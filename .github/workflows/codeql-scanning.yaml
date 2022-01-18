@@ -1,16 +1,13 @@
-name: "CodeQL"
+name: "CodeQL code scanning"
 
 on:
   push:
-    branches: [ main, add-codeql-scanning ]
+    branches: [ main ]
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [ main ]
   schedule:
     - cron: '30 18 * * 3'
-
-  # added to manually test workflow from 'actions' tab
-  workflow_dispatch:
 
 jobs:
   analyze:
