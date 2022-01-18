@@ -6,3 +6,9 @@ updates:
     directory: "/python-client"
     schedule:
       interval: "daily"
+  
+  # Maintain dependencies for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
