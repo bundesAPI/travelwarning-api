@@ -295,6 +295,7 @@ class DefaultApi(object):
     def get_representatives_country(self, **kwargs):
         """Gibt eine Liste der deutschen Vertretungen im Ausland zurück  # noqa: E501
 
+          # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -349,6 +350,7 @@ class DefaultApi(object):
     def get_representatives_germany(self, **kwargs):
         """Gibt eine Liste der ausländischen Vertretungen in Deutschland zurück  # noqa: E501
 
+          # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 
@@ -516,6 +518,7 @@ class DefaultApi(object):
     def get_travelwarning(self, **kwargs):
         """Gibt alle Reise- und Sicherheitshinweise zurück  # noqa: E501
 
+          # noqa: E501
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 

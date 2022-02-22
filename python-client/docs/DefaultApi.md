@@ -80,6 +80,8 @@ No authorization required
 
 Gibt eine Liste der deutschen Vertretungen im Ausland zurück
 
+
+
 ### Example
 
 
@@ -140,6 +142,8 @@ No authorization required
 > ResponseAddress get_representatives_germany()
 
 Gibt eine Liste der ausländischen Vertretungen in Deutschland zurück
+
+
 
 ### Example
 
@@ -332,6 +336,8 @@ No authorization required
 > ResponseWarnings get_travelwarning()
 
 Gibt alle Reise- und Sicherheitshinweise zurück
+
+
 
 ### Example
 
