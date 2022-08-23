@@ -21,6 +21,10 @@ des Auswärtigen Amtes zu finden.
 
 ## Änderungen [(offizielles Changelog)](https://www.auswaertiges-amt.de/de/-/2412916)
 
+### version [1.2.7](https://www.auswaertiges-amt.de/de/-/2412916) - (02.08.2022)
+
+Dreistellige ISO-Ländercodes ([ISO 3166-1 alpha-3](https://de.wikipedia.org/wiki/ISO-3166-1-Kodierliste)) wurden als `iso3CountryCode` hinzugefügt.
+
 ### version [1.2.6](https://www.auswaertiges-amt.de/de/-/2412916) - (08.12.2021)
 
 Es werden zusätzlich zu jedem Land **Ländercodes** mit jeweils **zwei Buchstaben** mit ausgegeben.
