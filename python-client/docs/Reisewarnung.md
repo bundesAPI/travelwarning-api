@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **effective** | **float** | Zeitstempel, seit wann der Reisehinweis gilt | [optional] 
 **title** | **str** | Titel des Landes | [optional] 
 **country_code** | **str** | Zweistelliger Ländercode | [optional] 
+**iso3_country_code** | **str** | Dreistelliger Ländercode ([*ISO-3166-1 alpha-3*](https://de.wikipedia.org/wiki/ISO-3166-1-Kodierliste)) | [optional] 
 **country_name** | **str** | (Deutscher) Name des Landes | [optional] 
 **warning** | **bool** | Ob eine Reisewarnung ausgesprochen wurde | [optional] 
 **partial_warning** | **bool** | Ob eine Teilreisewarnung ausgesprochen wurde | [optional] 

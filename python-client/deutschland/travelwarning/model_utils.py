@@ -1,7 +1,7 @@
 """
     Auswärtiges Amt: Reisewarnungen OpenData Schnittstelle
 
-    Reisewarnungen OpenData Schnittstelle. Dies ist die Beschreibung für die Schnittstelle zum Zugriff auf die Daten des [Auswärtigen Amtes](https://www.auswaertiges-amt.de/de/) im Rahmen der [OpenData](https://www.auswaertiges-amt.de/de/open-data-schnittstelle/736118) Initiative. ## Deaktivierung Die Schnittstelle kann deaktiviert werden, in dem Fall wird ein leeres JSON-Objekt zurückgegeben. ## Fehlerfall Im Fehlerfall wird ein leeres JSON-Objekt zurückgegeben. ## Nutzungsbedingungen Die Nutzungsbedingungen sind auf der [OpenData-Schnittstelle](https://www.auswaertiges-amt.de/de/open-data-schnittstelle/736118)  des Auswärtigen Amtes zu finden.   ## Änderungen [(offizielles Changelog)](https://www.auswaertiges-amt.de/de/-/2412916) ### version [1.2.6](https://www.auswaertiges-amt.de/de/-/2412916) - (08.12.2021) Es werden zusätzlich zu jedem Land **Ländercodes** mit jeweils **zwei Buchstaben** mit ausgegeben.  Die Länderkürzel werden bei [`/travelwarning`](#operations-default-getTravelwarning) und [`/travelwarning/{contentId}`](#operations-default-getSingleTravelwarning) in einem neuen Attribut ausgegeben z.B. in: [`/travelwarning/199124`](https://www.auswaertiges-amt.de/opendata/travelwarning/199124). ### version [1.2.5](https://www.auswaertiges-amt.de/de/-/2412916) (ursprünglich geplant für Ende September 2021) `content` (-> Details des Reise- und Sicherheitshinweis) wurde von [`/travelwarning`](#operations-default-getTravelwarning) entfernt -> bitte ab jetzt [`/travelwarning/{contentId}`](#operations-default-getSingleTravelwarning) nutzen um `content` abzufragen  `flagURL` (-> Details des Reise- und Sicherheitshinweis) wurde entfernt -> es werden keine **Flaggen** mehr angeboten  # noqa: E501
+    Reisewarnungen OpenData Schnittstelle. Dies ist die Beschreibung für die Schnittstelle zum Zugriff auf die Daten des [Auswärtigen Amtes](https://www.auswaertiges-amt.de/de/) im Rahmen der [OpenData](https://www.auswaertiges-amt.de/de/open-data-schnittstelle/736118) Initiative. ## Deaktivierung Die Schnittstelle kann deaktiviert werden, in dem Fall wird ein leeres JSON-Objekt zurückgegeben. ## Fehlerfall Im Fehlerfall wird ein leeres JSON-Objekt zurückgegeben. ## Nutzungsbedingungen Die Nutzungsbedingungen sind auf der [OpenData-Schnittstelle](https://www.auswaertiges-amt.de/de/open-data-schnittstelle/736118)  des Auswärtigen Amtes zu finden.   ## Änderungen [(offizielles Changelog)](https://www.auswaertiges-amt.de/de/-/2412916) ### version [1.2.7](https://www.auswaertiges-amt.de/de/-/2412916) - (02.08.2022) Dreistellige ISO-Ländercodes ([ISO 3166-1 alpha-3](https://de.wikipedia.org/wiki/ISO-3166-1-Kodierliste)) wurden als `iso3CountryCode` hinzugefügt. ### version [1.2.6](https://www.auswaertiges-amt.de/de/-/2412916) - (08.12.2021) Es werden zusätzlich zu jedem Land **Ländercodes** mit jeweils **zwei Buchstaben** mit ausgegeben. Die Länderkürzel werden bei [`/travelwarning`](#operations-default-getTravelwarning) und [`/travelwarning/{contentId}`](#operations-default-getSingleTravelwarning) in einem neuen Attribut ausgegeben z.B. in: [`/travelwarning/199124`](https://www.auswaertiges-amt.de/opendata/travelwarning/199124). ### version [1.2.5](https://www.auswaertiges-amt.de/de/-/2412916) (ursprünglich geplant für Ende September 2021) `content` (-> Details des Reise- und Sicherheitshinweis) wurde von [`/travelwarning`](#operations-default-getTravelwarning) entfernt -> bitte ab jetzt [`/travelwarning/{contentId}`](#operations-default-getSingleTravelwarning) nutzen um `content` abzufragen `flagURL` (-> Details des Reise- und Sicherheitshinweis) wurde entfernt -> es werden keine **Flaggen** mehr angeboten  # noqa: E501
 
     The version of the OpenAPI document: 1.2.6
     Contact: kontakt@bund.dev
@@ -15,6 +15,7 @@ import os
 import pprint
 import re
 import tempfile
+import uuid
 from copy import deepcopy
 from datetime import date, datetime  # noqa: F401
 
@@ -187,7 +188,7 @@ class OpenApiModel(object):
         if self.get("_spec_property_naming", False):
             return cls._new_from_openapi_data(**self.__dict__)
         else:
-            return new_cls.__new__(cls, **self.__dict__)
+            return cls.__new__(cls, **self.__dict__)
 
     def __deepcopy__(self, memo):
         cls = self.__class__
@@ -724,10 +725,8 @@ COERCION_INDEX_BY_TYPE = {
 UPCONVERSION_TYPE_PAIRS = (
     (str, datetime),
     (str, date),
-    (
-        int,
-        float,
-    ),  # A float may be serialized as an integer, e.g. '3' is a valid serialized float.
+    # A float may be serialized as an integer, e.g. '3' is a valid serialized float.
+    (int, float),
     (list, ModelComposed),
     (dict, ModelComposed),
     (str, ModelComposed),
@@ -1404,8 +1403,13 @@ def deserialize_file(response_data, configuration, content_disposition=None):
 
     if content_disposition:
         filename = re.search(
-            r'filename=[\'"]?([^\'"\s]+)[\'"]?', content_disposition
-        ).group(1)
+            r'filename=[\'"]?([^\'"\s]+)[\'"]?', content_disposition, flags=re.I
+        )
+        if filename is not None:
+            filename = filename.group(1)
+        else:
+            filename = "default_" + str(uuid.uuid4())
+
         path = os.path.join(os.path.dirname(path), filename)
 
     with open(path, "wb") as f:
@@ -1602,7 +1606,7 @@ def validate_and_convert_types(
     input_class_simple = get_simple_class(input_value)
     valid_type = is_valid_type(input_class_simple, valid_classes)
     if not valid_type:
-        if configuration:
+        if configuration or (input_class_simple == dict and dict not in valid_classes):
             # if input_value is not valid_type try to convert it
             converted_instance = attempt_convert_item(
                 input_value,
@@ -1696,11 +1700,13 @@ def model_to_dict(model_instance, serialize=True):
             attribute_map
     """
     result = {}
-    extract_item = (
-        lambda item: (item[0], model_to_dict(item[1], serialize=serialize))
-        if hasattr(item[1], "_data_store")
-        else item
-    )
+
+    def extract_item(item):
+        return (
+            (item[0], model_to_dict(item[1], serialize=serialize))
+            if hasattr(item[1], "_data_store")
+            else item
+        )
 
     model_instances = [model_instance]
     if model_instance._composed_schemas:
@@ -2073,7 +2079,9 @@ def validate_get_composed_info(constant_args, model_args, self):
     var_name_to_model_instances = {}
     for prop_name in model_args:
         if prop_name not in discarded_args:
-            var_name_to_model_instances[prop_name] = [self] + composed_instances
+            var_name_to_model_instances[prop_name] = [self] + list(
+                filter(lambda x: prop_name in x.openapi_types, composed_instances)
+            )
 
     return [
         composed_instances,
